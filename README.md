@@ -6,12 +6,12 @@
 ![GH License](https://img.shields.io/github/license/pforret/saild)
 [![basher install](https://img.shields.io/badge/basher-install-white?logo=gnu-bash&style=flat)](https://www.basher.it/package/)
 
-# saild
+# pforret/saild
 
-Start up your Laravel Sail dev environment
-* start Sail containers in Docker
+Start up all you need for a Laravel Sail dev environment in one go
+* start Sail containers (Docker)
+* open Sail ssh session (Docker)
 * open browser on http://[host name]
-* open Sail ssh session
 * upon closing ssh session, shut down Sail
 
 ## 🔥 Usage
