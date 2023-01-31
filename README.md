@@ -8,13 +8,17 @@
 
 # saild
 
-Start up your Laravel S
+Start up your Laravel Sail dev environment
+* start Sail containers in Docker
+* open browser on http://[host name]
+* open Sail ssh session
+* upon closing ssh session, shut down Sail
 
 ## 🔥 Usage
 
 ```
 Program : saild  by peter@forret.com
-Version : v0.0.1 (2023-01-31 17:37)
+Version : v1.0.1 (2023-01-31 18:32)
 Purpose : Start up your Laravel Sail dev environment
 Usage   : saild [-h] [-q] [-v] [-f] [-l <log_dir>] [-t <tmp_dir>] [-B <BIN>] [-W <WAIT>] [-U <URL>] <action>
 Flags, options and parameters:
@@ -26,7 +30,7 @@ Flags, options and parameters:
     -t|--tmp_dir <?> : [option] folder for temp files  [default: /tmp/saild]
     -B|--BIN <?>     : [option] sail binary  [default: vendor/bin/sail]
     -W|--WAIT <?>    : [option] seconds to wait for the browser  [default: 5]
-    -U|--URL <?>     : [option] URL to open in browser  [default: http://<host name>]
+    -U|--URL <?>     : [option] URL to open in browser  [default: http://BFLD-PFORRET17]
     <action>         : [choice] action to perform  [options: up,down,init,check,env,update]
 ```
 
@@ -45,7 +49,21 @@ Flags, options and parameters:
  ⠿ Container project-laravel.test-1  Started                                                                                                                                                                                                                     3.2s
 ⏳  Browser: open http://<host name> in 5 secs
 ⏳  Docker: open bash shell
-sail@a163e48d3e8f:/var/www/html$ 
+sail@a163e48d3e8f:/var/www/html$ (...)
+exit
+⏳  Docker: shut down Sail
+[+] Running 7/7
+ ⠿ Container project-laravel.test-1  Removed                                                                                                                                                                                                                     0.6s 
+ ⠿ Container project-selenium-1      Removed                                                                                                                                                                                                                     4.3s
+ ⠿ Container project-redis-1         Removed                                                                                                                                                                                                                     1.2s 
+ ⠿ Container project-meilisearch-1   Removed                                                                                                                                                                                                                     1.0s 
+ ⠿ Container project-mysql-1         Removed                                                                                                                                                                                                                     2.5s 
+ ⠿ Container project-mailhog-1       Removed                                                                                                                                                                                                                     1.4s 
+ ⠿ Network project_sail              Removed 
+ 
+ > saild init
+ # install Laravel Sail in an existing project
+ # https://laravel.com/docs/9.x/sail#installing-sail-into-existing-applications
 ```
 
 ## 🚀 Installation
