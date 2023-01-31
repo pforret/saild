@@ -95,7 +95,9 @@ Script:main() {
     init)
       #TIP: use «$script_prefix init» to ...
       #TIP:> $script_prefix init
-      do_init
+	  [[ ! -f composer.json ]] && IO:alert "You should run this from your project root"
+      composer require laravel/sail --dev
+	  php artisan sail:install
       ;;
 
     check | env)
