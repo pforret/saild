@@ -8,6 +8,8 @@
 
 # pforret/saild
 
+![](assets/saild.jpg)
+
 Start up all you need for a Laravel Sail dev environment in one go
 * start Sail containers (Docker)
 * open Sail ssh session (Docker)
