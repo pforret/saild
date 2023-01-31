@@ -6,13 +6,13 @@
 ### 3. implement helper functions you defined in previous step
 ### ==============================================================================
 
-### Created by author_name ( author_username ) on meta_today
-### Based on https://github.com/pforret/bashew bashew_version
+### Created by Peter Forret ( pforret ) on 2023-01-31
+### Based on https://github.com/pforret/bashew 1.19.3
 script_version="0.0.1" # if there is a VERSION.md in this script's folder, that will have priority over this version number
-readonly script_author="author@email.com"
-readonly script_created="meta_today"
+readonly script_author="peter@forret.com"
+readonly script_created="2023-01-31"
 readonly run_as_root=-1 # run_as_root: 0 = don't check anything / 1 = script MUST run as root / -1 = script MAY NOT run as root
-readonly script_description="package_description"
+readonly script_description="Start up your Laravel Sail dev environment"
 ## some initialisation
 action=""
 script_prefix=""
