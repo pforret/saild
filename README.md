@@ -20,7 +20,7 @@ Start up all you need for a Laravel Sail dev environment in one go
 
 ```
 Program : saild  by peter@forret.com
-Version : v1.0.1 (2023-01-31 18:32)
+Version : v1.0.6 (2023-01-31 18:32)
 Purpose : Start up your Laravel Sail dev environment
 Usage   : saild [-h] [-q] [-v] [-f] [-l <log_dir>] [-t <tmp_dir>] [-B <BIN>] [-W <WAIT>] [-U <URL>] <action>
 Flags, options and parameters:
