@@ -32,7 +32,7 @@ Flags, options and parameters:
     -t|--tmp_dir <?> : [option] folder for temp files  [default: /tmp/saild]
     -B|--BIN <?>     : [option] sail binary  [default: vendor/bin/sail]
     -W|--WAIT <?>    : [option] seconds to wait for the browser  [default: 5]
-    -U|--URL <?>     : [option] URL to open in browser  [default: http://BFLD-PFORRET17]
+    -U|--URL <?>     : [option] URL to open in browser  [default: http://$(hostname)]
     <action>         : [choice] action to perform  [options: up,down,init,check,env,update]
 ```
 
