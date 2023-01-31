@@ -42,25 +42,25 @@ Flags, options and parameters:
 > saild up
 ⏳  Docker: start up Sail
 [+] Running 7/7
- ⠿ Network project_sail              Created                                                                                                                                                                                                                     0.1s 
- ⠿ Container project-mysql-1         Started                                                                                                                                                                                                                     2.6s
- ⠿ Container project-meilisearch-1   Started                                                                                                                                                                                                                     2.0s 
- ⠿ Container project-mailhog-1       Started                                                                                                                                                                                                                     2.4s 
- ⠿ Container project-redis-1         Started                                                                                                                                                                                                                     2.5s 
- ⠿ Container project-selenium-1      Started                                                                                                                                                                                                                     1.9s 
- ⠿ Container project-laravel.test-1  Started                                                                                                                                                                                                                     3.2s
+ ⠿ Network project_sail              Created                    0.1s 
+ ⠿ Container project-mysql-1         Started                    2.6s
+ ⠿ Container project-meilisearch-1   Started                    2.0s 
+ ⠿ Container project-mailhog-1       Started                    2.4s 
+ ⠿ Container project-redis-1         Started                    2.5s 
+ ⠿ Container project-selenium-1      Started                    1.9s 
+ ⠿ Container project-laravel.test-1  Started                    3.2s
 ⏳  Browser: open http://<host name> in 5 secs
 ⏳  Docker: open bash shell
 sail@a163e48d3e8f:/var/www/html$ (...)
 exit
 ⏳  Docker: shut down Sail
 [+] Running 7/7
- ⠿ Container project-laravel.test-1  Removed                                                                                                                                                                                                                     0.6s 
- ⠿ Container project-selenium-1      Removed                                                                                                                                                                                                                     4.3s
- ⠿ Container project-redis-1         Removed                                                                                                                                                                                                                     1.2s 
- ⠿ Container project-meilisearch-1   Removed                                                                                                                                                                                                                     1.0s 
- ⠿ Container project-mysql-1         Removed                                                                                                                                                                                                                     2.5s 
- ⠿ Container project-mailhog-1       Removed                                                                                                                                                                                                                     1.4s 
+ ⠿ Container project-laravel.test-1  Removed                    0.6s 
+ ⠿ Container project-selenium-1      Removed                    4.3s
+ ⠿ Container project-redis-1         Removed                    1.2s 
+ ⠿ Container project-meilisearch-1   Removed                    1.0s 
+ ⠿ Container project-mysql-1         Removed                    2.5s 
+ ⠿ Container project-mailhog-1       Removed                    1.4s 
  ⠿ Network project_sail              Removed 
  
  > saild init
