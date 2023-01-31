@@ -51,7 +51,10 @@ flag|v|verbose|also show debug messages
 flag|f|force|do not ask for confirmation (always yes)
 option|l|log_dir|folder for log files |$HOME/log/$script_prefix
 option|t|tmp_dir|folder for temp files|/tmp/$script_prefix
-choice|1|action|action to perform|action1,action2,check,env,update
+option|B|BIN|sail binary|vendor/bin/sail
+option|W|WAIT|seconds to wait for the browser|5
+option|U|URL|URL to open in browser|http://$(hostname)
+choice|1|action|action to perform|up,down,init,check,env,update
 #param|?|input|input file/text
 " -v -e '^#' -e '^\s*$'
 }
@@ -67,16 +70,32 @@ Script:main() {
 
   action=$(Str:lower "$action")
   case $action in
-    action1)
-      #TIP: use «$script_prefix action1» to ...
-      #TIP:> $script_prefix action1
-      do_action1
+    up)
+      #TIP: use «$script_prefix up» to ...
+      #TIP:> $script_prefix up
+      [[ ! -x $BIN ]] && IO:die "Binary $BIN not found"
+	  
+	  IO:announce "Docker: start up Sail" \
+	  && $BIN up -d \
+	  && IO:announce "Browser: open $URL in $WAIT secs" \
+	  && open_browser "$URL" "$WAIT" \
+	  && IO:announce "Docker: open bash shell" \
+	  && $BIN shell \
+	  && IO:announce "Docker: shut down Sail" \
+	  && $BIN down
+      ;;
+	  
+    down)
+      #TIP: use «$script_prefix up» to ...
+      #TIP:> $script_prefix up
+      [[ ! -x $BIN ]] && IO:die "Binary $BIN not found"
+	  $BIN down
       ;;
 
-    action2)
-      #TIP: use «$script_prefix action2» to ...
-      #TIP:> $script_prefix action2
-      do_action2
+    init)
+      #TIP: use «$script_prefix init» to ...
+      #TIP:> $script_prefix init
+      do_init
       ;;
 
     check | env)
@@ -108,17 +127,17 @@ Script:main() {
 ## Put your helper scripts here
 #####################################################################
 
-do_action1() {
-  IO:log "action1"
-  # Examples of required binaries/scripts and how to install them
-  # Os:require "ffmpeg"
-  # Os:require "convert" "imagemagick"
-  # Os:require "IO:progressbar" "basher install pforret/IO:progressbar"
-  # (code)
+function open_browser() {
+	(
+	[[ "${2:-0}" -gt 0 ]] && sleep "${2}"
+	[[ -n $(command -v explorer.exe) ]] && explorer.exe "$1" && return
+	[[ -n $(command -v chrome) ]]       && chrome "$1" && return
+	[[ -n $(command -v firefox) ]]      && firefox "$1" && return
+	) &
 }
 
-do_action2() {
-  IO:log "action2"
+do_init() {
+  IO:log "init"
   # (code)
 
 }
@@ -145,7 +164,7 @@ quiet=0
 
 ### stdIO:print/stderr output
 function IO:initialize() {
-  script_started_at=$(Tool:time)
+  script_started_at="$(Tool:time)"
   [[ "${BASH_SOURCE[0]:-}" != "${0}" ]] && sourced=1 || sourced=0
   [[ -t 1 ]] && piped=0 || piped=1 # detect if output is piped
   if [[ $piped -eq 0 ]]; then
@@ -297,13 +316,15 @@ function Tool:time() {
 }
 
 function Tool:throughput() {
-  local time_started="$1"
+  local time_started="${1:-}"
+  [[ -z "$time_started" ]] && time_started="$script_started_at"
   local operations=${2:-1}
   local name=${3:-operation}
 
-  local time_finished=$(Tool:time)
+  local time_finished
+  time_finished="$(Tool:time)"
   duration=$(Tool:calc "$time_finished - $time_started")
-  seconds=$(Tool:round $duration)
+  seconds=$(Tool:round "$duration")
   if [[ "$operations" -gt 1 ]] ; then
     if [[ $operations -gt $seconds ]] ; then
       ops=$(Tool:calc "$operations / $duration" )
