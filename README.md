@@ -22,14 +22,11 @@ Start up all you need for a Laravel Sail dev environment in one go
 Program : saild  by peter@forret.com
 Version : v1.0.6 (2023-01-31 18:32)
 Purpose : Start up your Laravel Sail dev environment
-Usage   : saild [-h] [-q] [-v] [-f] [-l <log_dir>] [-t <tmp_dir>] [-B <BIN>] [-W <WAIT>] [-U <URL>] <action>
+Usage   : saild [-h] [-q] [-v] [-B <BIN>] [-W <WAIT>] [-U <URL>] <action>
 Flags, options and parameters:
     -h|--help        : [flag] show usage [default: off]
     -q|--quiet       : [flag] no output [default: off]
     -v|--verbose     : [flag] also show debug messages [default: off]
-    -f|--force       : [flag] do not ask for confirmation (always yes) [default: off]
-    -l|--log_dir <?> : [option] folder for log files   [default: /home/pforret/log/saild]
-    -t|--tmp_dir <?> : [option] folder for temp files  [default: /tmp/saild]
     -B|--BIN <?>     : [option] sail binary  [default: vendor/bin/sail]
     -W|--WAIT <?>    : [option] seconds to wait for the browser  [default: 5]
     -U|--URL <?>     : [option] URL to open in browser  [default: http://$(hostname)]
