@@ -53,7 +53,7 @@ option|l|log_dir|folder for log files |$HOME/log/$script_prefix
 option|t|tmp_dir|folder for temp files|/tmp/$script_prefix
 option|B|BIN|sail binary|vendor/bin/sail
 option|W|WAIT|seconds to wait for the browser|5
-option|U|URL|URL to open in browser|http://$(hostname)
+option|U|URL|URL to open in browser|
 choice|1|action|action to perform|up,down,init,check,env,update
 #param|?|input|input file/text
 " -v -e '^#' -e '^\s*$'
@@ -74,6 +74,8 @@ Script:main() {
       #TIP: use «$script_prefix up» to ...
       #TIP:> $script_prefix up
       [[ ! -x $BIN ]] && IO:die "Binary $BIN not found"
+      [[ -z "$URL" ]] && URL="$(grep APP_URL .env | cut -d= -f2-)"
+      [[ -z "$URL" ]] && URL="http://$(hostname)"
 	  
 	  IO:announce "Docker: start up Sail" \
 	  && $BIN up -d \
