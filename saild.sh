@@ -1,11 +1,4 @@
 #!/usr/bin/env bash
-### ==============================================================================
-### SO HOW DO YOU PROCEED WITH YOUR SCRIPT?
-### 1. define the flags/options/parameters and defaults you need in Option:config()
-### 2. implement the different actions in Script:main() with helper functions
-### 3. implement helper functions you defined in previous step
-### ==============================================================================
-
 ### Created by Peter Forret ( pforret ) on 2023-01-31
 ### Based on https://github.com/pforret/bashew 1.19.3
 script_version="0.0.1" # if there is a VERSION.md in this script's folder, that will have priority over this version number
@@ -21,28 +14,6 @@ install_package=""
 temp_files=()
 
 function Option:config() {
-  ### Change the next lines to reflect which flags/options/parameters you need
-  ### flag:   switch a flag 'on' / no value specified
-  ###     flag|<short>|<long>|<description>
-  ###     e.g. "-v" or "--verbose" for verbose output / default is always 'off'
-  ###     will be available as $<long> in the script e.g. $verbose
-  ### option: set an option / 1 value specified
-  ###     option|<short>|<long>|<description>|<default>
-  ###     e.g. "-e <extension>" or "--extension <extension>" for a file extension
-  ###     will be available a $<long> in the script e.g. $extension
-  ### list: add an list/array item / 1 value specified
-  ###     list|<short>|<long>|<description>| (default is ignored)
-  ###     e.g. "-u <user1> -u <user2>" or "--user <user1> --user <user2>"
-  ###     will be available a $<long> array in the script e.g. ${user[@]}
-  ### param:  comes after the options
-  ###     param|<type>|<long>|<description>
-  ###     <type> = 1 for single parameters - e.g. param|1|output expects 1 parameter <output>
-  ###     <type> = ? for optional parameters - e.g. param|1|output expects 1 parameter <output>
-  ###     <type> = n for list parameter    - e.g. param|n|inputs expects <input1> <input2> ... <input99>
-  ###     will be available as $<long> in the script after option/param parsing
-  ### choice:  is like a param, but when there are limited options
-  ###     choice|<type>|<long>|<description>|choice1,choice2,...
-  ###     <type> = 1 for single parameters - e.g. param|1|output expects 1 parameter <output>
   grep <<< "
 #commented lines will be filtered
 flag|h|help|show usage
@@ -54,8 +25,8 @@ option|t|tmp_dir|folder for temp files|/tmp/$script_prefix
 option|B|BIN|sail binary|vendor/bin/sail
 option|W|WAIT|seconds to wait for the browser|5
 option|U|URL|URL to open in browser|
-choice|1|action|action to perform|up,down,init,check,env,update
-#param|?|input|input file/text
+choice|1|action|action to perform|up,down,init,example,clone,check,env,update
+param|?|repo|e.g. 'git@github.com:user/laravelproject.git'
 " -v -e '^#' -e '^\s*$'
 }
 
@@ -76,7 +47,7 @@ Script:main() {
       [[ ! -x $BIN ]] && IO:die "Binary $BIN not found"
       [[ -z "$URL" ]] && URL="$(grep APP_URL .env | cut -d= -f2-)"
       [[ -z "$URL" ]] && URL="http://$(hostname)"
-	  
+
 	  IO:announce "Docker: start up Sail" \
 	  && $BIN up -d \
 	  && IO:announce "Browser: open $URL in $WAIT secs" \
@@ -86,12 +57,42 @@ Script:main() {
 	  && IO:announce "Docker: shut down Sail" \
 	  && $BIN down
       ;;
-	  
+
     down)
-      #TIP: use «$script_prefix up» to ...
-      #TIP:> $script_prefix up
+      #TIP: use «$script_prefix down» to shut down the Sail environment
+      #TIP:> $script_prefix down
       [[ ! -x $BIN ]] && IO:die "Binary $BIN not found"
 	  $BIN down
+      ;;
+
+    clone)
+      #TIP: use «$script_prefix clone» to clone and set up a Laravel saild project on a new machine
+      #TIP:> $script_prefix clone git@github.com:username/laravelproject.git
+      folder_name=$(basename "$repo" .git)
+      [[ -d "$folder_name" ]] && IO:die "Folder $folder_name already exists"
+      IO:print "Cloning Laravel project: $repo -> $folder_name"
+      git clone "$repo" \
+      && cd "$folder_name" \
+      && composer install \
+      && npm install \
+      && cp .env.example .env \
+      && php artisan key:generate
+      ;;
+
+    example)
+      #TIP: use «$script_prefix example» to generate .env.example from .env
+      #TIP:> $script_prefix example
+      [[ ! -f .env ]] && IO:die "No .env file found"
+      #[[ -f .env.example ]] && IO:confirm "Overwrite existing .env.example file?" || IO:die ".env.example exists"
+      < .env awk -F= '
+        BEGIN { OFS = "="; }
+        $1 == "" { print; next;}
+        $1 ~ /KEY/       && $2 != "" { print $1,""; next }
+        $1 ~ /SECRET/    && $2 != "" { print $1,""; next }
+        $1 ~ /PASSWORD/  && $2 != "" { print $1,""; next }
+        $1 ~ /BUCKET/    && $2 != "" { print $1,""; next }
+        { print $0; }
+      '
       ;;
 
     init)
