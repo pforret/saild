@@ -37,7 +37,7 @@ Flags, options and parameters:
     <repo>           : [parameter] e.g. 'git@github.com:user/laravelproject.git' (optional)
 
 ### TIPS & EXAMPLES
-* use saild up to start sail, open browser, open shell and shut down sail when that shell is ended
+* use saild up to start sail, open browser, shell and shut down after
   saild up
 * use saild down to shut down the Sail environment
   saild down
@@ -49,7 +49,7 @@ Flags, options and parameters:
   saild install
 * use saild check to check if this script is ready to execute and what values the options/flags are
   saild check
-* use saild env to generate an example .env file
+* use saild env to generate an example .env file (for this script)
   saild env > .env
 * use saild update to update to the latest version
   saild update
