@@ -83,7 +83,7 @@ Script:main() {
       #TIP: use «$script_prefix example» to generate .env.example from .env
       #TIP:> $script_prefix example
       [[ ! -f .env ]] && IO:die "No .env file found"
-      #[[ -f .env.example ]] && IO:confirm "Overwrite existing .env.example file?" || IO:die ".env.example exists"
+      [[ -f .env.example ]] && IO:confirm "Overwrite existing .env.example file?" || IO:die ".env.example exists"
       < .env awk -F= '
         BEGIN { OFS = "="; }
         $1 == "" { print; next;}
@@ -92,7 +92,9 @@ Script:main() {
         $1 ~ /PASSWORD/  && $2 != "" { print $1,""; next }
         $1 ~ /BUCKET/    && $2 != "" { print $1,""; next }
         { print $0; }
-      '
+      ' \
+      | tee .env.example \
+      | more
       ;;
 
     init)
