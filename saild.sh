@@ -42,7 +42,7 @@ Script:main() {
   action=$(Str:lower "$action")
   case $action in
     up)
-      #TIP: use «$script_prefix up» to ...
+      #TIP: use «$script_prefix up» to start sail, open browser, open shell and shut down sail when that shell is ended
       #TIP:> $script_prefix up
       [[ ! -x $BIN ]] && IO:die "Binary $BIN not found"
       [[ -z "$URL" ]] && URL="$(grep APP_URL .env | cut -d= -f2-)"
@@ -66,7 +66,7 @@ Script:main() {
       ;;
 
     clone)
-      #TIP: use «$script_prefix clone» to clone and set up a Laravel saild project on a new machine
+      #TIP: use «$script_prefix clone» to clone and set up a Laravel project on a new machine
       #TIP:> $script_prefix clone git@github.com:username/laravelproject.git
       folder_name=$(basename "$repo" .git)
       [[ -d "$folder_name" ]] && IO:die "Folder $folder_name already exists"
@@ -97,9 +97,9 @@ Script:main() {
       | more
       ;;
 
-    init)
-      #TIP: use «$script_prefix init» to ...
-      #TIP:> $script_prefix init
+    install)
+      #TIP: use «$script_prefix install» to install Laravel Sail in an existing project
+      #TIP:> $script_prefix install
 	  [[ ! -f composer.json ]] && IO:alert "You should run this from your project root"
       composer require laravel/sail --dev
 	  php artisan sail:install

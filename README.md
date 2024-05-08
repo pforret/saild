@@ -20,17 +20,39 @@ Start up all you need for a Laravel Sail dev environment in one go
 
 ```
 Program : saild  by peter@forret.com
-Version : v1.0.6 (2023-01-31 18:32)
+Version : v1.0.8 (May  8 08:28:56 2024)
 Purpose : Start up your Laravel Sail dev environment
-Usage   : saild [-h] [-q] [-v] [-B <BIN>] [-W <WAIT>] [-U <URL>] <action>
+Usage   : saild [-h] [-q] [-v] [-f] [-l <log_dir>] [-t <tmp_dir>] [-B <BIN>] [-W <WAIT>] [-U <URL>] <action> <repo?>
 Flags, options and parameters:
     -h|--help        : [flag] show usage [default: off]
     -q|--quiet       : [flag] no output [default: off]
     -v|--verbose     : [flag] also show debug messages [default: off]
+    -f|--force       : [flag] do not ask for confirmation (always yes) [default: off]
+    -l|--log_dir <?> : [option] folder for log files   [default: /Users/pforret/log/saild]
+    -t|--tmp_dir <?> : [option] folder for temp files  [default: /tmp/saild]
     -B|--BIN <?>     : [option] sail binary  [default: vendor/bin/sail]
     -W|--WAIT <?>    : [option] seconds to wait for the browser  [default: 5]
-    -U|--URL <?>     : [option] URL to open in browser  [default: http://$(hostname)]
-    <action>         : [choice] action to perform  [options: up,down,init,check,env,update]
+    -U|--URL <?>     : [option] URL to open in browser
+    <action>         : [choice] action to perform  [options: up,down,init,example,clone,check,env,update]
+    <repo>           : [parameter] e.g. 'git@github.com:user/laravelproject.git' (optional)
+                                  @github.com:pforret/saild.git                                             
+### TIPS & EXAMPLES
+* use saild up to start sail, open browser, open shell and shut down sail when that shell is ended
+  saild up
+* use saild down to shut down the Sail environment
+  saild down
+* use saild clone to clone and set up a Laravel project on a new machine
+  saild clone git@github.com:username/laravelproject.git
+* use saild example to generate .env.example from .env
+  saild example
+* use saild install to install Laravel Sail in an existing project
+  saild install
+* use saild check to check if this script is ready to execute and what values the options/flags are
+  saild check
+* use saild env to generate an example .env file
+  saild env > .env
+* use saild update to update to the latest version
+  saild update
 ```
 
 ## ⚡️ Examples
