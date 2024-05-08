@@ -85,6 +85,9 @@ exit
  > saild init
  # install Laravel Sail in an existing project
  # https://laravel.com/docs/9.x/sail#installing-sail-into-existing-applications
+ 
+ > saild clone git@github.com:username/laravelproject.git
+ # git clone -> composer install -> npm install -> create .env -> key:generate
 ```
 
 ## 🚀 Installation
