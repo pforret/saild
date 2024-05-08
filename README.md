@@ -18,7 +18,7 @@ Start up all you need for a Laravel Sail dev environment in one go
 
 ## 🔥 Usage
 
-```
+```shell
 Program : saild  by peter@forret.com
 Version : v1.0.8 (May  8 08:28:56 2024)
 Purpose : Start up your Laravel Sail dev environment
@@ -33,9 +33,9 @@ Flags, options and parameters:
     -B|--BIN <?>     : [option] sail binary  [default: vendor/bin/sail]
     -W|--WAIT <?>    : [option] seconds to wait for the browser  [default: 5]
     -U|--URL <?>     : [option] URL to open in browser
-    <action>         : [choice] action to perform  [options: up,down,init,example,clone,check,env,update]
+    <action>         : [choice] action to perform  [options: up,down,install,example,clone,check,env,update]
     <repo>           : [parameter] e.g. 'git@github.com:user/laravelproject.git' (optional)
-                                  @github.com:pforret/saild.git                                             
+
 ### TIPS & EXAMPLES
 * use saild up to start sail, open browser, open shell and shut down sail when that shell is ended
   saild up
