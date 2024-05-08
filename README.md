@@ -18,7 +18,7 @@ Start up all you need for a Laravel Sail dev environment in one go
 
 ## 🔥 Usage
 
-```shell
+```ini
 Program : saild  by peter@forret.com
 Version : v1.0.8 (May  8 08:28:56 2024)
 Purpose : Start up your Laravel Sail dev environment
