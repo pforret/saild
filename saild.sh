@@ -74,7 +74,7 @@ Script:main() {
     OS:require npm
     OS:require php
     local folder_name
-    [[ -z "$repo" ]] && IO:die "No repo specified"
+    [[ -z "$repo" ]] && IO:die "No repo specified: $script_prefix clone <user/repo>"
     folder_name=$(basename "$repo" .git)
     [[ -d "$folder_name" ]] && IO:die "Folder $folder_name already exists"
     IO:print "Cloning Laravel project: $repo -> $folder_name"
