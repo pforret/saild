@@ -99,6 +99,7 @@ Script:main() {
         $1 ~ /KEY/       && $2 != "" { print $1,""; next }
         $1 ~ /SECRET/    && $2 != "" { print $1,""; next }
         $1 ~ /PASSWORD/  && $2 != "" { print $1,""; next }
+        $1 ~ /PASS/  && $2 != "" { print $1,""; next }
         $1 ~ /BUCKET/    && $2 != "" { print $1,""; next }
         { print $0; }
       ' |
