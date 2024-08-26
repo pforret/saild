@@ -25,7 +25,7 @@ option|t|tmp_dir|folder for temp files|/tmp/$script_prefix
 option|B|BIN|sail binary|vendor/bin/sail
 option|W|WAIT|seconds to wait for the browser|5
 option|U|URL|URL to open in browser|
-choice|1|action|action to perform|up,down,init,example,clone,check,env,update
+choice|1|action|action to perform|up,down,init,log,example,clone,check,env,update
 param|?|repo|e.g. 'git@github.com:user/laravelproject.git'
 " -v -e '^#' -e '^\s*$'
 }
@@ -105,6 +105,17 @@ Script:main() {
       ' |
       tee .env.example |
       more
+    ;;
+
+  log)
+    local laravel_log_dir=storage/logs
+    [[ ! -d  "$laravel_log_dir" ]] && IO:die "Folder '$laravel_log_dir' not found"
+    local last_log_file
+    last_log_file=$(ls -t "$laravel_log_dir"/*.log | head -1)
+    [[ -z "$last_log_file" ]] && IO:die "Folder '$laravel_log_dir': no log files found"
+    IO:success "Showing log file '$(basename "$last_log_file")'"
+    trap "IO:success \"\n----- STOPPED AFTER \$SECONDS SECONDS -----\"" INT TERM EXIT
+    tail -f "$last_log_file"
     ;;
 
   install)
