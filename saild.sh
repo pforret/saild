@@ -69,10 +69,10 @@ Script:main() {
     #TIP: use «$script_prefix clone» to clone and set up a Laravel project on a new machine
     #TIP:> $script_prefix clone git@github.com:username/laravelproject.git
     # shellcheck disable=SC2154
-    OS:require git
-    OS:require composer
-    OS:require npm
-    OS:require php
+    Os:require git
+    Os:require composer
+    Os:require npm
+    Os:require php
     local folder_name
     [[ -z "$repo" ]] && IO:die "No repo specified: $script_prefix clone <user/repo>"
     folder_name=$(basename "$repo" .git)
