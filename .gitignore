@@ -4,3 +4,5 @@ log
 .env
 .idea
 vendor
+.DS_store
+*/.DS_Store

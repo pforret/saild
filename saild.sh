@@ -25,7 +25,7 @@ option|t|tmp_dir|folder for temp files|/tmp/$script_prefix
 option|B|BIN|sail binary|vendor/bin/sail
 option|W|WAIT|seconds to wait for the browser|5
 option|U|URL|URL to open in browser|
-choice|1|action|action to perform|up,down,init,log,example,clone,check,env,update
+choice|1|action|action to perform|up,down,init,log,example,new,clone,check,env,update
 param|?|repo|e.g. 'git@github.com:user/laravelproject.git'
 " -v -e '^#' -e '^\s*$'
 }
@@ -47,6 +47,7 @@ Script:main() {
     [[ ! -x $BIN ]] && IO:die "Binary $BIN not found"
     [[ -z "$URL" ]] && URL="$(grep APP_URL .env | cut -d= -f2-)"
     [[ -z "$URL" ]] && URL="http://$(hostname)"
+    check_docker
 
     IO:announce "Docker: start up Sail" &&
       $BIN up -d &&
@@ -84,6 +85,32 @@ Script:main() {
       npm install &&
       cp .env.example .env &&
       php artisan key:generate
+    ;;
+
+  new)
+    #TIP: use «$script_prefix new» to create new Laravel project with Sail
+    #TIP:> $script_prefix new NewProject
+    # shellcheck disable=SC2154
+    Os:require docker
+    check_docker
+
+    local project
+    project=$(basename "$repo")
+    [[ -d "$project" ]] && IO:die "Folder $project already exists"
+    docker run --rm --pull=always -v "$(pwd)":/opt -w /opt laravelsail/php84-composer:latest \
+    bash -c "laravel new $project --no-interaction && cd $project && php ./artisan sail:install --with=mysql,redis,mailpit"
+    cd "$project" || IO:die "Folder $project not found"
+    git init && git add . && git commit -m "Initial Laravel Sail install"
+    $BIN pull mysql redis mailpit && $BIN build
+    git add . && git commit -m "Added Sail build"
+    IO:announce "We will need your sudo password for the last step"
+    sudo chown -R "$USER": .
+    composer require --dev barryvdh/laravel-ide-helper
+    composer require --dev barryvdh/laravel-debugbar
+    php artisan migrate:fresh --seed
+
+    IO:announce "You can now start your Laravel project with 'vendor/bin/sail up -d'"
+
     ;;
 
   example)
@@ -163,6 +190,13 @@ function open_browser() {
     [[ -n $(command -v chrome) ]] && chrome "$1" && return
     [[ -n $(command -v firefox) ]] && firefox "$1" && return
   ) &
+}
+
+function check_docker(){
+  docker info > /dev/null 2>&1
+  if [ $? -ne 0 ]; then
+      IO:die "Docker is not running"
+  fi
 }
 
 do_init() {
